@@ -527,8 +527,15 @@ def stream_response(response, request_data, model, prompt_tokens):
 
 if __name__ == '__main__':
     internal_ip = socket.gethostbyname(socket.gethostname())
-    response = requests.get('https://api.ipify.org')
-    public_ip = response.text
+
+    # Try to fetch public IP, but don't crash if unavailable
+    try:
+        response = requests.get('https://api.ipify.org', timeout=5)
+        response.raise_for_status()
+        public_ip = response.text
+    except Exception as e:
+        logger.warning(f"Could not fetch public IP address: {e}")
+        public_ip = "unavailable"
     logger.info(f"""{printedcolors.Color.fg.lightcyan}  
 Server is ready to serve at:
 Internal IP: {internal_ip}:5001
