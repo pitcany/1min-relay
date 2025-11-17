@@ -22,13 +22,15 @@ Please support us by donating at https://donate.stripe.com/00w4gB1NbdI60afcKPgMw
 - **Non-Streaming Support**: Compatible with non-streaming workflows.
 - **Docker Support**: Deploy easily with Docker for fast and consistent setup.
 - **Multi-Document Support**: Supports document uploads for enhanced functionality. Some include .docx, .pdf, .txt, .yaml and etc.
-- **Image Support**: Supports image uploads for enhanced functionality.
+- **Image Support**: Supports image uploads for enhanced functionality (vision models).
+- **Image Generation**: Generate images using various AI models through `/v1/images/generations` endpoint.
 - **ARM64 and AMD64 Support**: Compatible with both ARM64 and AMD64 architectures.
 - **Multiple Requests**: Supports multiple requests simultaneously.
+- **Rate Limiting**: Built-in rate limiting (500 requests/min for chat, 100 requests/min for image generation) with memcached support.
 
 ## Paid Perks
 - **Hosted**: Hosted for you, accessible anytime, anywhere.
-- **Latest Features**: Get access to latest features such as image generations that are not yet available in the public version.
+- **Latest Features**: Get access to the latest features and updates before they're released publicly.
 - **Priority Bug Fix**: Get the most common bug fixed quickly
 - **Priority Support**: Get support quicker than public version!
 
@@ -52,7 +54,7 @@ and then run python3 main.py
 Depending on your system, you may need to run `python` instead of `python3`.
 
 ### Docker
-Running 1min-relay in docker is the easiet method. Please note that the connection ip address displayed on server start will be wrong when in docker.
+Running 1min-relay in docker is the easiest method. Please note that the connection ip address displayed on server start will be wrong when in docker.
 
 #### Pre-Built images
 
@@ -61,7 +63,7 @@ Running 1min-relay in docker is the easiet method. Please note that the connecti
 docker pull kokofixcomputers/1min-relay:latest
 ```
 
-2. To encrease security, 1min-relay will require it's own network to be able to communicate with memcached.
+2. To increase security, 1min-relay will require it's own network to be able to communicate with memcached.
 To create a network, run:
 ```bash
 docker network create 1min-relay-network
@@ -94,7 +96,7 @@ From the project directory (where Dockerfile and main.py reside), run:
 docker build -t 1min-relay:latest .
 ```
 
-2. To encrease security, 1min-relay will require it's own network to be able to communicate with memcached.
+2. To increase security, 1min-relay will require it's own network to be able to communicate with memcached.
 To create a network, run:
 ```bash
 docker network create 1min-relay-network
@@ -170,7 +172,7 @@ Compose will automatically do these things for you:
 #### Managing docker containers
 You can also have multiple instances of 1min-relay running on the same machine with docker.
 
-You just need to chznge the name parameter of the container so you can identify them.
+You just need to change the name parameter of the container so you can identify them.
 
 To stop a 1min-relay container, run:
 ```bash
@@ -184,6 +186,19 @@ docker start 1min-relay-container
 ### Environment Variables
 - `SUBSET_OF_ONE_MIN_PERMITTED_MODELS`: Specifies a subset of 1min.ai models to expose. Default: mistral-nemo,gpt-4o,deepseek-chat.
 - `PERMIT_MODELS_FROM_SUBSET_ONLY`: Restricts model usage to the specified subset. Set to True to enforce this restriction or False to allow all models supported by 1min.ai. Default: False.
+
+### Available Models
+The relay supports a wide range of AI models including:
+- **GPT Models**: gpt-5-nano, gpt-5, gpt-5-mini, gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-4, gpt-3.5-turbo
+- **O-Series Models**: o3-mini, o1-preview, o1-mini, gpt-o1-pro, gpt-o4-mini
+- **DeepSeek Models**: deepseek-chat, deepseek-reasoner
+- **Claude Models**: claude-3-7-sonnet, claude-3-5-sonnet, claude-3-opus, claude-3-sonnet, claude-3-haiku, claude-instant-1.2, claude-2.1
+- **Gemini Models**: gemini-1.5-pro, gemini-1.5-flash, gemini-1.0-pro
+- **Mistral Models**: mistral-large-latest, mistral-small-latest, mistral-nemo, open-mistral-7b
+- **Meta/Replicate Models**: llama-2-70b-chat, meta-llama-3-70b-instruct, meta-llama-3.1-405b-instruct, command
+- **Image Generation Models**: stable-image, stable-diffusion-xl, midjourney, flux-schnell, LEONARDO models, and more
+
+*Note: Vision support is available for gpt-4o, gpt-4o-mini, and gpt-4-turbo models.*
 
 ### Support
 Please consider supporting us by donating at https://donate.stripe.com/00w4gB1NbdI60afcKPgMw00 or contributing.

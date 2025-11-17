@@ -359,7 +359,7 @@ def conversation():
     if not request_data.get('stream', False):
         # Non-Streaming Response
         logger.debug("Non-Streaming AI Response")
-        response = requests.post(ONE_MIN_API_URL, json=payload, headers=headers)
+        response = requests.post(ONE_MIN_API_URL, json=payload, headers=headers, timeout=60)
         response.raise_for_status()
         one_min_response = response.json()
         
@@ -372,7 +372,7 @@ def conversation():
     else:
         # Streaming Response
         logger.debug("Streaming AI Response")
-        response_stream = requests.post(ONE_MIN_CONVERSATION_API_STREAMING_URL, data=json.dumps(payload), headers=headers, stream=True)
+        response_stream = requests.post(ONE_MIN_CONVERSATION_API_STREAMING_URL, data=json.dumps(payload), headers=headers, stream=True, timeout=60)
         if response_stream.status_code != 200:
             if response_stream.status_code == 401:
                 return ERROR_HANDLER(1020)
